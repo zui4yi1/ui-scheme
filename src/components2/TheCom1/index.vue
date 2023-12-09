@@ -1,5 +1,5 @@
 <template>
-  <div>TheCom1</div>
+  <div>TheCom1:{{ msg }}</div>
 </template>
 
 <script>

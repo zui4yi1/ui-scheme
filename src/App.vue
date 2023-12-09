@@ -12,6 +12,10 @@
 
     <el-button @click="handleSubmit">提交</el-button>
     <el-button @click="handleReset">重置</el-button>
+    <el-button @click="handleOpenDrawer(1)">抽屉1</el-button>
+    <el-button @click="handleOpenDrawer(2)">抽屉2</el-button>
+    <ex-drawer title="抽屉" ref="drawerRef" />
+    <ui-scene-drawer ref="drawerRef" :components="components" />
   </div>
 </template>
 
@@ -29,6 +33,8 @@ export default Vue.extend({
   components: {
     UiSCheme,
     UiDynamic,
+    "ex-drawer": () => import("./components/ex-drawer/index.vue"),
+    "ui-scene-drawer": () => import("./components/ui-scene-drawer/index.vue"),
   },
   data() {
     return {
@@ -69,6 +75,27 @@ export default Vue.extend({
       }
       if (prop === "userName" && val === "ccc") {
         setPropVal("hobits", ["2"]);
+      }
+    },
+    handleOpenDrawer(type) {
+      switch (type) {
+        case 1:
+          this.$refs.drawerRef.openDrawer(
+            "TheCom1",
+            "详情",
+            {},
+            { msg: "抽屉1" }
+          );
+          break;
+
+        default:
+          this.$refs.drawerRef.openDrawer(
+            "TheCom2",
+            "表单",
+            {},
+            { msg: "抽屉2" }
+          );
+          break;
       }
     },
   },

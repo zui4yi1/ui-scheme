@@ -1,12 +1,12 @@
 <template>
-  <div>TheCom2</div>
+  <div>TheCom2:{{ msg }}</div>
 </template>
 
-<script lang="ts">
-  export default {
-    name: 'TheCom2',
-    props: {
-      msg: String,
-    },
-  };
+<script>
+export default {
+  name: "TheCom2",
+  props: {
+    msg: String,
+  },
+};
 </script>
