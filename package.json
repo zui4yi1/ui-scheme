@@ -1,0 +1,31 @@
+{
+  "name": "ui-scheme",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "commit": "cz",
+    "pkg:ui": "node ./build/package/index.js ui"
+  },
+  "config": {
+    "commitizen": {
+      "path": "cz-emoji-conventional"
+    }
+  },
+  "dependencies": {
+    "commitizen": "^4.3.0",
+    "cz-emoji-conventional": "^1.0.2",
+    "element-ui": "^2.15.14",
+    "vue": "^2.6.14"
+  },
+  "devDependencies": {
+    "@vue/cli-service": "~5.0.0",
+    "vue-template-compiler": "^2.6.14"
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead"
+  ]
+}

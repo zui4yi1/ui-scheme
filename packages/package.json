@@ -1,0 +1,27 @@
+{
+  "name": "ui-scheme",
+  "version": "1.0.0",
+  "description": "1. ui-scheme 实现零代码的加强版的 form 表单组件, 基于 element ui 的 el-form。集 scheme、表单详情、重置、表单变更对比等功能一身。2. 三大场景 scene 组件：查询模板、抽屉、弹窗。",
+  "private": false,
+  "main": "index.js",
+  "keywords": [
+    "ui-scheme",
+    "formily",
+    "element ui"
+  ],
+  "author": "xiehaihong",
+  "license": "MIT",
+  "files": [
+    "components",
+    "hooks",
+    "types",
+    "utils"
+  ],
+  "peerDependencies": {
+    "element-ui": "^2.10.1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/zui4yi1/Styleless-UI-for-uniapp.git"
+  }
+}
