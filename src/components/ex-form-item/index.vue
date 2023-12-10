@@ -1,12 +1,19 @@
 <template>
-  <el-form-item :label="label" :prop="prop" :rules="rules" v-bind="props">
+  <el-form-item
+    v-if="['form', 'search'].includes(mode)"
+    :label="label"
+    :prop="prop"
+    :rules="rules"
+    v-bind="props"
+  >
     <slot />
   </el-form-item>
+  <i v-else />
 </template>
 
 <script>
 export default {
-  name: "ExFormItem",
+  name: "ex-form-item",
   props: {
     label: {
       type: String,
@@ -24,6 +31,14 @@ export default {
       type: String,
       default: "",
     },
+    parent: {
+      type: Object,
+      default: () => {},
+    },
+    mode: {
+      type: String,
+      default: "form",
+    },
     rules: {
       type: Array,
       default: () => undefined, // 注意此处为undefined, 否则会覆盖form层级的
@@ -37,8 +52,8 @@ export default {
     value: {
       handler(val) {
         const defaultVal = this.getInitValue(val, this.type);
-        this.$set(this.$parent.$parent.form, this.prop, defaultVal);
-        this.$set(this.$parent.$parent.initValues, this.prop, defaultVal);
+        this.$set(this.parent.form, this.prop, defaultVal);
+        this.$set(this.parent.initValues, this.prop, defaultVal);
       },
       deep: true,
       immediate: true,

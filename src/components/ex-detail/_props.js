@@ -23,7 +23,7 @@
 /**
  * @typedef {Object} IProps
  * @property {Array<IScheme>} schemes 表单配置项, 注意表单可能是多块的，故直接定为二维
- * @property {'form'|'search'|'detail'} mode 模式, 默认form
+ * @property {'form'|'detail'} mode 模式, 默认form
  * @property {String} labelWidth 标签宽度, 默认120px即6个中文宽度
  */
 
@@ -35,19 +35,19 @@ export const props = {
     type: Array,
     default: () => [],
   },
-  mode: {
-    type: String,
-    default: "form",
-  },
   detail: {
     type: Object,
     default: () => ({}),
   },
-  dicts: {
+  form: {
     type: Object,
     default: () => ({}),
   },
-  rules: {
+  parent: {
+    type: Object,
+    default: () => {},
+  },
+  dicts: {
     type: Object,
     default: () => ({}),
   },
@@ -58,10 +58,6 @@ export const props = {
   components: {
     type: Array,
     default: () => [],
-  },
-  formProps: {
-    type: Object,
-    default: () => ({}),
   },
   // 为空时的占位符
   emptyText: {

@@ -2,6 +2,7 @@
   <div id="app">
     <UiSCheme
       ref="uiSchemeRef"
+      :mode="mode"
       :schemes="scheme"
       :detail="detail"
       :dicts="dicts"
@@ -12,6 +13,7 @@
 
     <el-button @click="handleSubmit">提交</el-button>
     <el-button @click="handleReset">重置</el-button>
+    <el-button @click="handleToggleForm">切换表单/预览</el-button>
     <el-button @click="handleOpenDrawer(1)">抽屉1</el-button>
     <el-button @click="handleOpenDrawer(2)">抽屉2</el-button>
     <ex-drawer title="抽屉" ref="drawerRef" />
@@ -39,6 +41,7 @@ export default Vue.extend({
   data() {
     return {
       components: [TheCom1, TheCom2],
+      mode: "form",
       scheme: [],
       dicts: {},
       detail: {},
@@ -65,6 +68,9 @@ export default Vue.extend({
     async handleSubmit() {
       const data = await this.$refs.uiSchemeRef.getFormFilterEmpty();
       console.info("formData", data);
+    },
+    handleToggleForm() {
+      this.mode = this.mode === "detail" ? "form" : "detail";
     },
     handleReset() {
       this.$refs.uiSchemeRef.reset();
