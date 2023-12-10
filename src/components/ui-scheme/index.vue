@@ -47,6 +47,7 @@
             <UiDynamic
               v-if="item.isCustom"
               v-model="form[item.prop]"
+              :mode="mode"
               :type="item.type"
               :props="item.props"
               :components="item.component ? [item.component] : components"

@@ -66,7 +66,7 @@ export default Vue.extend({
   },
   methods: {
     async handleSubmit() {
-      const data = await this.$refs.uiSchemeRef.getFormFilterEmpty();
+      const data = await this.$refs.uiSchemeRef.getForm();
       console.info("formData", data);
     },
     handleToggleForm() {

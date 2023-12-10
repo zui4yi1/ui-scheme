@@ -92,6 +92,7 @@ export const getDetail = async () => {
         race: "2",
         skill: ["2"],
         userName: "abc",
+        cus1: "",
       });
     }, 500);
   });
