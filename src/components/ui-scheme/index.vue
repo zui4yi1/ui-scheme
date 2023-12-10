@@ -120,7 +120,7 @@ export default {
   data() {
     return {
       // 带选项的组件
-      compsWithItems: ["el-radio", "el-checkbox", "el-select", "el-cascade"],
+      compsWithItems: ["el-radio", "el-checkbox", "el-select", "el-cascader"],
       // 触发事件为input的组件
       compsWithInput: ["el-input"],
       // 初始值, 默认为detail, 若未传detail则由组件类型自动推断其初始值

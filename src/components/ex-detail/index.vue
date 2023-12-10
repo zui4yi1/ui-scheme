@@ -70,11 +70,27 @@ export default {
   props,
   data() {
     return {
-      compsWithItems: ["el-radio", "el-checkbox", "el-select", "el-cascade"],
+      compsWithItems: ["el-radio", "el-checkbox", "el-select", "el-cascader"],
     };
   },
 
   methods: {
+    _getTreeLabel(list, vals) {
+      const res = [];
+      const curVal = vals.shift();
+      const obj = list.find((t) => t.value === curVal);
+      if (!obj) return res;
+      res.push(obj.label);
+      const children = obj.children;
+      if (vals.length) {
+        const _res = this._getTreeLabel(children, vals);
+        if (_res.length) {
+          res.push(..._res);
+        }
+      }
+      return res;
+    },
+
     getLabels(item, val) {
       const { type, prop, props: { multiple } = {} } = item;
       const list = this.dicts[prop] || [];
@@ -86,6 +102,8 @@ export default {
           .filter((t) => val.includes(t.value))
           .map((t) => t.label)
           .join(", ");
+      } else if (type === "el-cascader") {
+        return this._getTreeLabel(list, (val || []).slice(0)).join(",");
       }
       return val;
     },

@@ -31,6 +31,13 @@
       >
       </el-option>
     </el-select>
+    <el-cascader
+      v-else-if="type === 'el-cascader'"
+      v-model="curVal"
+      :options="list"
+      v-bind="props"
+    >
+    </el-cascader>
     <div v-else></div>
   </div>
 </template>
@@ -45,7 +52,7 @@ export default {
       get() {
         // 不同组件的初始值. 注意null和''都是有意义的, 故仅为undefined时根据组件类型初始化
         if ([undefined].includes(this.value)) {
-          if (["el-checkbox"].includes(this.type)) return [];
+          if (["el-checkbox", "el-cascader"].includes(this.type)) return [];
           if (["el-select"].includes(this.type) && this.multiple) return [];
           else return "";
         } else return this.value;

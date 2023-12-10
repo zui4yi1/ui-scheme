@@ -1,9 +1,12 @@
 <template>
   <component
     ref="componentRef"
-    :is="DynamicComponent"
     v-if="DynamicComponent"
+    v-model="curVal"
+    :mode="mode"
+    :is="DynamicComponent"
     v-bind="props"
+    @change="handleChange"
   />
 </template>
 
@@ -20,9 +23,17 @@ export default {
       type: String,
       default: "",
     },
+    mode: {
+      type: String,
+      default: "form",
+    },
     components: {
       type: Array,
       default: () => [],
+    },
+    value: {
+      type: String,
+      default: "",
     },
     props: {
       type: Object,
@@ -30,6 +41,14 @@ export default {
     },
   },
   computed: {
+    curVal: {
+      get() {
+        return this.value;
+      },
+      set(val) {
+        this.$emit("input", val);
+      },
+    },
     DynamicComponent() {
       return this.components.find((item) => item.name === this.type);
     },
@@ -41,6 +60,9 @@ export default {
           this.$refs.componentRef.onOpen(parent, opener);
         }
       });
+    },
+    handleChange(val) {
+      this.$emit("change", val);
     },
   },
 };

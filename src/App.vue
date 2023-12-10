@@ -58,6 +58,7 @@ export default Vue.extend({
     this.dicts = {
       gender: DemoData.dicts.gender,
       skill: DemoData.dicts.skill,
+      cascader: DemoData.dicts.cascader,
       hobits: await DemoData.getHobbits(),
       race: await DemoData.getRaces(),
     };
