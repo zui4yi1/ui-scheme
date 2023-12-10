@@ -58,13 +58,17 @@
             @input="handleChange(item.prop, $event)"
           />
           <!--仅有value的原生ele组件, 且事件为input-->
-          <component
-            v-else-if="[compsWithInput.includes(item.type)]"
-            :is="item.type"
-            v-model="form[item.prop]"
-            v-bind="item.props"
-            @input="handleChange(item.prop, $event)"
-          />
+          <template v-else-if="[compsWithInput.includes(item.type)]">
+            <!-- 这类必须在value非undefined的时候渲染, 否则会因ex-form-item设置初始值时误发rule校验 -->
+            <component
+              v-if="form[item.prop] !== undefined"
+              :is="item.type"
+              v-model="form[item.prop]"
+              v-bind="item.props"
+              @input="handleChange(item.prop, $event)"
+            />
+          </template>
+
           <!--仅有value的原生ele组件, 且事件为change-->
           <component
             v-else

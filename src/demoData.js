@@ -11,6 +11,10 @@ export const scheme = [
         type: "el-input",
         prop: "userName",
         label: "用户名",
+        props: {
+          placeholder: "请输入",
+          clearable: true,
+        },
         rules: [
           {
             required: true,
