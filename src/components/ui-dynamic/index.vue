@@ -1,5 +1,10 @@
 <template>
-  <component :is="DynamicComponent" v-if="DynamicComponent" v-bind="props" />
+  <component
+    ref="componentRef"
+    :is="DynamicComponent"
+    v-if="DynamicComponent"
+    v-bind="props"
+  />
 </template>
 
 <script>
@@ -27,6 +32,15 @@ export default {
   computed: {
     DynamicComponent() {
       return this.components.find((item) => item.name === this.type);
+    },
+  },
+  methods: {
+    onOpen(parent, opener) {
+      this.$nextTick(() => {
+        if (this.$refs.componentRef?.onOpen instanceof Function) {
+          this.$refs.componentRef.onOpen(parent, opener);
+        }
+      });
     },
   },
 };

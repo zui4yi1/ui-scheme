@@ -80,21 +80,11 @@ export default Vue.extend({
     handleOpenDrawer(type) {
       switch (type) {
         case 1:
-          this.$refs.drawerRef.openDrawer(
-            "TheCom1",
-            "详情",
-            {},
-            { msg: "抽屉1" }
-          );
+          this.$refs.drawerRef.openDrawer("TheCom1", { msg: "抽屉1" });
           break;
 
         default:
-          this.$refs.drawerRef.openDrawer(
-            "TheCom2",
-            "表单",
-            {},
-            { msg: "抽屉2" }
-          );
+          this.$refs.drawerRef.openDrawer("TheCom2", { msg: "抽屉2" });
           break;
       }
     },

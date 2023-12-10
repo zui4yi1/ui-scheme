@@ -8,5 +8,10 @@ export default {
   props: {
     msg: String,
   },
+  methods: {
+    onOpen(drawer, opener) {
+      drawer?.setProps && drawer.setProps("抽屉2");
+    },
+  },
 };
 </script>

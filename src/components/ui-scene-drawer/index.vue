@@ -2,7 +2,10 @@
   <ex-drawer
     ref="drawerRef"
     :title="title"
+    :width="cusWidth || width"
     :props="drawerProps"
+    :titleSlot="titleSlot"
+    :titleSlotProps="titleSlotProps"
     @confirm="handleConfirm"
     @second="handleSecond"
   >
@@ -23,6 +26,10 @@ export default {
     "ui-dynamic": () => import("../ui-dynamic/index.vue"),
   },
   props: {
+    width: {
+      type: String,
+      default: "820px",
+    },
     components: {
       type: Array,
       default: () => [],
@@ -30,26 +37,67 @@ export default {
   },
   data() {
     return {
+      // 如果有新增状态，注意有可能需要在reset中重置
       opener,
       title: "",
       type: "",
+      cusWidth: "",
       data: {},
       props: {},
       drawerProps: {},
+      titleSlot: undefined,
+      titleSlotProps: {},
     };
   },
 
   methods: {
-    // drawerProps位于props前面, 因为这个一般是空的，如果非空也可以定义为常量
-    openDrawer(type, title, drawerProps = {}, props = {}) {
+    resetDrawerProps() {
+      this.title = "";
+      this.cusWidth = "";
+      this.drawerProps = {};
+      this.titleSlot = undefined;
+      this.titleSlotProps = {};
+    },
+
+    /**
+     * 打开抽屉
+     * @param type 组件名
+     * @param props 组件参数
+     */
+    openDrawer(type, props = {}) {
+      this.resetDrawerProps();
       this.type = type;
-      this.title = title;
-      this.drawerProps = drawerProps;
       this.props = props;
       this.opener = this.$parent.$parent;
       this.$refs.drawerRef.openDrawer();
+      this.$nextTick(() => {
+        this.$refs["dynamicRef"].onOpen(this, this.opener);
+      });
     },
 
+    setProps(title, width, props) {
+      title !== undefined && (this.title = title);
+      width !== undefined && (this.cusWidth = width);
+      props !== undefined && (this.drawerProps = props);
+    },
+    /** 设置title, title可为组件 */
+    setTitle(title, slotProps) {
+      if (
+        ["string", "number", "boolean"].includes(typeof title) ||
+        [null, undefined].includes(title)
+      ) {
+        this.title = title;
+      } else {
+        this.titleSlot = title;
+        this.titleSlotProps = slotProps || {};
+      }
+    },
+    setWidth(width) {
+      this.cusWidth = width;
+    },
+    setDrawerProps(props) {
+      this.drawerProps = props || {};
+    },
     async handleConfirm() {
       // 触发组件的confirm事件
       // this参数, 是为了方便子组件调用closeDrawer

@@ -10,6 +10,9 @@
     @close="closeDrawer"
     v-bind="props"
   >
+    <template #title>
+      <component :is="titleSlot" v-if="titleSlot" v-bind="titleSlotProps" />
+    </template>
     <div v-if="open" class="custom-body">
       <slot />
     </div>

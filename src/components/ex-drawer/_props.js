@@ -13,6 +13,15 @@ export const props = {
     default: () => {},
   },
 
+  titleSlot: {
+    type: Object,
+    default: () => undefined,
+  },
+  titleSlotProps: {
+    type: Object,
+    default: () => {},
+  },
+
   hasFooter: {
     type: Boolean,
     default: true,
