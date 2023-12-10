@@ -85,6 +85,7 @@
           </ExFormItem>
         </template>
       </template>
+      <slot name="append" />
     </el-form>
     <!--详情模式-->
     <ExDetail
@@ -142,7 +143,9 @@ export default {
     async getForm() {
       try {
         await this.$refs.formRef.validate();
-      } catch (err) {}
+      } catch (err) {
+        return Promise.resolve(false);
+      }
       return this._cloneData();
     },
 
@@ -150,7 +153,9 @@ export default {
     async getFormFilterEmpty() {
       try {
         await this.$refs.formRef.validate();
-      } catch (err) {}
+      } catch (err) {
+        return Promise.resolve(false);
+      }
 
       const data = this._cloneData();
       const keys = Object.keys(data);
