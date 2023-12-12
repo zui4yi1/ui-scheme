@@ -380,7 +380,7 @@ export const getDetail = async () => {
   });
 };
 
-export const getHobbits = async () => {
+export const getHobby = async () => {
   return new Promise((resolve) => {
     setTimeout(() => {
       resolve([

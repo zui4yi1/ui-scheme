@@ -30,7 +30,7 @@ export default {
       gender: DemoData.dicts.gender,
       skill: DemoData.dicts.skill,
       cascader: DemoData.dicts.cascader,
-      hobby: await DemoData.getHobbits(),
+      hobby: await DemoData.getHobby(),
       race: await DemoData.getRaces(),
     };
   },

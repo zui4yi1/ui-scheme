@@ -46,7 +46,7 @@ export default Vue.extend({
       dicts: {},
       detail: {},
       rules: {
-        hobits: [{ required: true, message: "该项不可为空" }],
+        hobby: [{ required: true, message: "该项不可为空" }],
         race: [{ required: true, message: "该项不可为空" }],
         gender: [{ required: true, message: "该项不可为空" }],
       },
@@ -59,7 +59,7 @@ export default Vue.extend({
       gender: DemoData.dicts.gender,
       skill: DemoData.dicts.skill,
       cascader: DemoData.dicts.cascader,
-      hobits: await DemoData.getHobbits(),
+      hobby: await DemoData.getHobby(),
       race: await DemoData.getRaces(),
     };
     // 响应式写法
@@ -82,7 +82,7 @@ export default Vue.extend({
         setPropVal("userName", "ccc");
       }
       if (prop === "userName" && val === "ccc") {
-        setPropVal("hobits", ["2"]);
+        setPropVal("hobby", ["2"]);
       }
     },
     handleOpenDrawer(type) {
