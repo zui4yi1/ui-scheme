@@ -1,4 +1,4 @@
-import TheFormHeader from "./components2/TheFormHeader/index.vue";
+import TheFormHeader from "../components2/TheFormHeader/index.vue";
 
 export const scheme = [
   {
@@ -29,7 +29,7 @@ export const scheme = [
       },
       {
         type: "el-checkbox",
-        prop: "hobits",
+        prop: "hobby",
         label: "爱好",
       },
       {
@@ -370,7 +370,7 @@ export const getDetail = async () => {
     setTimeout(() => {
       resolve({
         gender: "2",
-        hobits: ["1", "3"],
+        hobby: ["1", "3"],
         race: "2",
         skill: ["2"],
         userName: "abc",
@@ -402,3 +402,91 @@ export const getRaces = async () => {
     }, 300);
   });
 };
+
+export const querySchemes = (() => {
+  const arr = scheme[0].items;
+  const props = ["userName", "race", "time"];
+  const items = props
+    .map((k) => {
+      const tmp = arr.find((t) => t.prop === k);
+      return tmp;
+    })
+    .filter((t) => !!t);
+  return [
+    {
+      items,
+    },
+  ];
+})();
+
+export const tableSchemes = [
+  {
+    label: "姓名",
+    prop: "userName",
+  },
+  {
+    label: "性别",
+    prop: "gender",
+    dict: true,
+    // 若dictName与prop相同,则可不用传dictName
+    // dictName: "gender",
+  },
+  {
+    label: "年龄",
+    prop: "age",
+  },
+  {
+    label: "爱好",
+    prop: "hobby",
+    dict: true,
+    // dictName: "hobby",
+  },
+  {
+    label: "擅长",
+    prop: "skill",
+    dict: true,
+    dictName: "skill",
+  },
+  {
+    label: "出生日期",
+    prop: "birthDay",
+  },
+];
+
+export const tableData = (() => {
+  return {
+    code: 200,
+    data: {
+      data: [
+        {
+          id: 111,
+          userName: "张三",
+          gender: "1",
+          age: 20,
+          hobby: ["1", "2"],
+          skill: "1",
+          birthDay: "2020-12-12",
+        },
+        {
+          id: 222,
+          userName: "李四",
+          gender: "1",
+          age: 24,
+          hobby: ["1"],
+          skill: "2",
+          birthDay: "2020-12-13",
+        },
+        {
+          id: 333,
+          userName: "随机",
+          gender: "2",
+          age: 26,
+          hobby: ["1"],
+          skill: "1",
+          birthDay: "2020-12-14",
+        },
+      ],
+      total: 25,
+    },
+  };
+})();
