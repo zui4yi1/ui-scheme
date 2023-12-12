@@ -63,7 +63,7 @@
               @input="handleChange(item.prop, $event)"
             />
             <!--仅有value的原生ele组件, 且事件为input-->
-            <template v-else-if="[compsWithInput.includes(item.type)]">
+            <template v-else-if="compsWithInput.includes(item.type)">
               <!-- 这类必须在value非undefined的时候渲染, 否则会因ex-form-item设置初始值时误发rule校验 -->
               <component
                 v-if="form[item.prop] !== undefined"
@@ -136,7 +136,7 @@ export default {
       return JSON.parse(JSON.stringify(this.form));
     },
     reset() {
-      this.form = JSON.parse(JSON.stringify(this.detail));
+      this.form = JSON.parse(JSON.stringify(this.initValues));
     },
 
     /** 获取表单值 */
