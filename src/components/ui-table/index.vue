@@ -1,58 +1,60 @@
 <template>
   <div class="table-card" style="height: 400px">
-    <el-table
-      :data="tableData"
-      stripe
-      height="calc(100% - 52px)"
-      v-bind="tableProps"
-      @selection-change="handleSelectionChange"
-    >
-      <el-table-column
-        v-if="isSelectable"
-        type="selection"
-        align="center"
-        width="60"
-      />
-      <el-table-column
-        v-if="showIndex"
-        type="index"
-        align="center"
-        label="序号"
-        width="80"
+    <ui-scheme ref="uiSchemeRef" mode="form">
+      <el-table
+        :data="tableData"
+        stripe
+        height="calc(100% - 52px)"
+        v-bind="tableProps"
+        @selection-change="handleSelectionChange"
       >
-        <template #default="{ $index }">
-          {{ getRowInx($index) }}
-        </template>
-      </el-table-column>
-      <el-table-column
-        v-for="(item, inx) in tableSchemes"
-        :key="'column' + inx"
-        :show-overflow-tooltip="item.showOverflowTooltip !== false"
-        :width="item.width || 'auto'"
-        :align="item.align || 'center'"
-        :label="item.label"
-        :prop="item.prop"
-        v-bind="item.props || {}"
-      >
-        <template #default="{ row }">
-          <!--优先级: 字典->自定义组件->默认直接展示-->
-          <template v-if="item.dict">
-            {{ getDictName(item.dictName || item.prop, row[item.prop]) }}
+        <el-table-column
+          v-if="isSelectable"
+          type="selection"
+          align="center"
+          width="60"
+        />
+        <el-table-column
+          v-if="showIndex"
+          type="index"
+          align="center"
+          label="序号"
+          width="80"
+        >
+          <template #default="{ $index }">
+            {{ getRowInx($index) }}
           </template>
-          <template v-else-if="item.component">
-            <component
-              :is="item.component"
-              v-bind="item.props"
-              :value="row[item.prop]"
-              :row="row"
-            />
+        </el-table-column>
+        <el-table-column
+          v-for="(item, inx) in tableSchemes"
+          :key="'column' + inx"
+          :show-overflow-tooltip="item.showOverflowTooltip !== false"
+          :width="item.width || 'auto'"
+          :align="item.align || 'center'"
+          :label="item.label"
+          :prop="item.prop"
+          v-bind="item.props || {}"
+        >
+          <template #default="{ row }">
+            <!--优先级: 字典->自定义组件->默认直接展示-->
+            <template v-if="item.dict">
+              {{ getDictName(item.dictName || item.prop, row[item.prop]) }}
+            </template>
+            <template v-else-if="item.component">
+              <component
+                :is="item.component"
+                v-bind="item.props"
+                :value="row[item.prop]"
+                :row="row"
+              />
+            </template>
+            <template v-else>
+              {{ row[item.prop] }}
+            </template>
           </template>
-          <template v-else>
-            {{ row[item.prop] }}
-          </template>
-        </template>
-      </el-table-column>
-    </el-table>
+        </el-table-column>
+      </el-table>
+    </ui-scheme>
     <el-pagination
       :total="total"
       :current-page="pageNum"
@@ -66,9 +68,11 @@
 </template>
 
 <script>
+import UiScheme from "../ui-scheme/index.vue";
 import { props } from "./_props";
 export default {
   name: "ui-table",
+  components: { UiScheme },
   props,
   methods: {
     handleSelectionChange() {},

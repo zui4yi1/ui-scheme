@@ -68,4 +68,9 @@ export const props = {
     type: String,
     default: "",
   },
+  // 尾部扩展组件
+  appendComponent: {
+    type: [Object, String],
+    default: undefined,
+  },
 };

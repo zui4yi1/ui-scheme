@@ -1,6 +1,6 @@
 <template>
-  <div>
-    <!-- 暂时使用vshow的方式控制显隐, 因为切换时ExFormItem会触发, 不好控制-->
+  <div style="height: 100%">
+    <!-- 暂时使用vshow的方式控制显隐, 因为切换时UiSchemeItem会触发, 不好控制-->
     <!--表单模式-->
     <el-form
       v-show="['form', 'search'].includes(mode)"
@@ -10,6 +10,7 @@
       :label-width="labelWidth"
       :validate-on-rule-change="false"
       :rules="rules"
+      style="height: 100%"
       v-bind="formProps"
     >
       <template v-for="(scheme, inx1) in schemes">
@@ -30,7 +31,7 @@
 
         <!--表单项遍历-->
         <template v-for="(item, inx2) in scheme.items">
-          <ExFormItem
+          <UiSchemeItem
             v-show="item.visible !== false"
             v-if="item.isRemove !== false"
             :mode="mode"
@@ -58,18 +59,18 @@
               v-else-if="compsWithItems.includes(item.type)"
               v-model="form[item.prop]"
               :type="item.type"
-              :props="item.props"
+              :props="_defaultPropsCompsWithItems(item.props)"
               :list="dicts[item.prop] || []"
               @input="handleChange(item.prop, $event)"
             />
             <!--仅有value的原生ele组件, 且事件为input-->
             <template v-else-if="compsWithInput.includes(item.type)">
-              <!-- 这类必须在value非undefined的时候渲染, 否则会因ex-form-item设置初始值时误发rule校验 -->
+              <!-- 这类必须在value非undefined的时候渲染, 否则会因ui-scheme-item设置初始值时误发rule校验 -->
               <component
                 v-if="form[item.prop] !== undefined"
                 :is="item.type"
                 v-model="form[item.prop]"
-                v-bind="item.props"
+                v-bind="_defaultPropsCompsWithInput(item.props)"
                 @input="handleChange(item.prop, $event)"
               />
             </template>
@@ -82,10 +83,13 @@
               v-bind="item.props"
               @change="handleChange(item.prop, $event)"
             />
-          </ExFormItem>
+          </UiSchemeItem>
         </template>
       </template>
-      <slot name="append" />
+      <slot name="append">
+        <component :is="appendComponent" v-if="appendComponent" />
+      </slot>
+      <slot />
     </el-form>
     <!--详情模式-->
     <ExDetail
@@ -104,9 +108,9 @@
 
 <script>
 import ExDetail from "../ex-detail/index.vue";
-import ExFormItem from "../ex-form-item/index.vue";
 import ExOptions from "../ex-options/index.vue";
 import UiDynamic from "../ui-dynamic/index.vue";
+import UiSchemeItem from "../ui-scheme-item/index.vue";
 import { props } from "./_props";
 const ComponentName = "ui-scheme";
 export default {
@@ -114,7 +118,7 @@ export default {
   components: {
     UiDynamic,
     ExOptions,
-    ExFormItem,
+    UiSchemeItem,
     ExDetail,
   },
   props,
@@ -122,8 +126,16 @@ export default {
     return {
       // 带选项的组件
       compsWithItems: ["el-radio", "el-checkbox", "el-select", "el-cascader"],
+      defaultPropsCompsWithItems: {
+        placeholder: "请选择",
+        clearable: true,
+      },
       // 触发事件为input的组件
       compsWithInput: ["el-input"],
+      defaultPropsCompsWithInput: {
+        placeholder: "请输入",
+        clearable: true,
+      },
       // 初始值, 默认为detail, 若未传detail则由组件类型自动推断其初始值
       initValues: {},
       // 表单
@@ -134,6 +146,24 @@ export default {
   methods: {
     _cloneData() {
       return JSON.parse(JSON.stringify(this.form));
+    },
+    _defaultPropsCompsWithItems(props) {
+      return Object.assign(
+        {
+          placeholder: "请选择",
+          clearable: true,
+        },
+        props
+      );
+    },
+    _defaultPropsCompsWithInput(props) {
+      return Object.assign(
+        {
+          placeholder: "请输入",
+          clearable: true,
+        },
+        props
+      );
     },
     reset() {
       this.form = JSON.parse(JSON.stringify(this.initValues));

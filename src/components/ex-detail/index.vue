@@ -40,7 +40,7 @@
             <template v-else>
               {{ form[item.prop] }}
             </template>
-            <ex-form-item
+            <ui-scheme-item
               v-show="item.visible !== false"
               v-if="item.isRemove !== false"
               mode="detail"
@@ -58,14 +58,14 @@
 </template>
 
 <script>
-import ExFormItem from "../ex-form-item/index.vue";
 import UiDynamic from "../ui-dynamic/index.vue";
+import UiSchemeItem from "../ui-scheme-item/index.vue";
 import { props } from "./_props";
 export default {
   name: "ex-detail",
   components: {
     UiDynamic,
-    "ex-form-item": () => import("../ex-form-item/index.vue"),
+    "ui-scheme-item": UiSchemeItem,
   },
   props,
   data() {
